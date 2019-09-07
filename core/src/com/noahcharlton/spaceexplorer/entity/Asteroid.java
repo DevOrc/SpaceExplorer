@@ -16,7 +16,7 @@ public class Asteroid extends Entity {
 
     private static final Random random = new Random();
     private final Texture texture = new Texture(Gdx.files.internal("asteroid.png"));
-    private static final float SIZE = 28 / GameRenderer.PIXELS_PER_METER;
+    private static final float SIZE = 80 / GameRenderer.PIXELS_PER_METER;
 
     public Asteroid(Game game) {
         super(game);
@@ -39,25 +39,33 @@ public class Asteroid extends Entity {
         shape.dispose();
 
         randomizePosition();
+        randomVelocities();
 
         return body;
     }
 
+    private void randomVelocities() {
+        float angularVelocity = random.nextFloat() / random.nextInt(5);
+        float xVelocity = random.nextFloat() - .5f;
+        float yVelocity = random.nextFloat() - .5f;
+
+        body.setAngularVelocity(angularVelocity);
+        body.setLinearVelocity(xVelocity, yVelocity);
+    }
+
     private void randomizePosition() {
-        int xPos = random.nextInt(100) - 50;
-        int yPos = random.nextInt(100) - 50;
+        int xPos = random.nextInt(50) - 25;
+        int yPos = random.nextInt(50) - 25;
         float angle = (float) (random.nextInt(180) * Math.PI / 180);
 
-//        if(Math.abs && ){
-//
-//        }
-
-
-            body.setTransform(xPos, yPos, angle);
+        body.setTransform(xPos, yPos, angle);
     }
 
     @Override
     public void render(SpriteBatch batch) {
+        if(Float.isNaN(body.getPosition().x) || Float.isNaN(body.getPosition().y) )
+            return;
+
         renderTexture(batch, texture, SIZE, SIZE);
     }
 }

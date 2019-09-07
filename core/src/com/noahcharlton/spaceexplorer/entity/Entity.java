@@ -31,6 +31,9 @@ public abstract class Entity {
         int width = (int) (w * GameRenderer.PIXELS_PER_METER);
         int height = (int) (h * GameRenderer.PIXELS_PER_METER);
 
+        x -= width / 2;
+        y -= height / 2;
+
         batch.draw(texture, x, y, width / 2f, height / 2f, width, height, 1, 1,
                 rotation, 0, 0, width, height, false, false);
     }
