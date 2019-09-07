@@ -10,7 +10,9 @@ import com.noahcharlton.spaceexplorer.graphics.GameRenderer;
 
 public class Ship extends Entity {
 
-    private static final float IMPULSE_FORCE = 4000f;
+    private static final float SIZE = 128 / GameRenderer.PIXELS_PER_METER;
+    private static final float IMPULSE_FORCE = 25f;
+
     private final Texture texture = new Texture(Gdx.files.internal("ship.png"));
 
     public Ship(Game game) {
@@ -27,11 +29,11 @@ public class Ship extends Entity {
         body = world.createBody(bodyDef);
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(64, 64);
+        shape.setAsBox(SIZE / 2f, SIZE / 2f);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.density = .1f;
+        fixtureDef.density = 1.5f;
         fixtureDef.friction = 0.5f;
         body.createFixture(fixtureDef);
 
@@ -42,28 +44,36 @@ public class Ship extends Entity {
 
     @Override
     public void update() {
+        applyEngineForces();
+        updateRotation();
+    }
+
+    private void applyEngineForces() {
+        float x = (float)Math.sin(body.getAngle() - Math.PI);
+        float y = (float)Math.cos(body.getAngle());
+
         if(Gdx.input.isKeyPressed(Input.Keys.W)) {
-            body.applyForceToCenter(0f, IMPULSE_FORCE, true);
+            body.applyForceToCenter(x * IMPULSE_FORCE, y * IMPULSE_FORCE, true);
         } else if(Gdx.input.isKeyPressed(Input.Keys.S)) {
-            body.applyForceToCenter(0f, -IMPULSE_FORCE, true);
+            body.applyForceToCenter(x * -IMPULSE_FORCE, y * -IMPULSE_FORCE, true);
         }
+    }
+
+    private void updateRotation() {
+        float rotRad = body.getAngle();
 
         if(Gdx.input.isKeyPressed(Input.Keys.A)) {
-            body.applyForceToCenter(-IMPULSE_FORCE, 0f, true);
+            rotRad += .1f;
         } else if(Gdx.input.isKeyPressed(Input.Keys.D)) {
-            body.applyForceToCenter(IMPULSE_FORCE, 0f, true);
+            rotRad -= .1f;
         }
 
-        body.setAngularVelocity(.5f);
+        body.setTransform(body.getPosition(), rotRad);
+        body.setAngularVelocity(0);
     }
 
     @Override
     public void render(SpriteBatch batch) {
-        int x = (int) (body.getPosition().x * GameRenderer.PIXELS_PER_METER);
-        int y = (int) (body.getPosition().y * GameRenderer.PIXELS_PER_METER);
-        int rotation = (int) (body.getAngle() * 180 / Math.PI);
-
-        batch.draw(texture, x, y, 64, 64, 128, 128, 1, 1,
-                rotation, 0, 0, 128, 128, false, false);
+        renderTexture(batch, texture, SIZE, SIZE);
     }
 }
