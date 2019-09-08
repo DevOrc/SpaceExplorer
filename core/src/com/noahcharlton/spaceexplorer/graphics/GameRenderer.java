@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.noahcharlton.spaceexplorer.Game;
@@ -37,7 +38,6 @@ public class GameRenderer {
         game.getEntities().forEach(entity -> entity.render(batch));
         batch.end();
         renderPhysicsBoxes();
-
     }
 
     private void renderPhysicsBoxes() {
@@ -46,8 +46,12 @@ public class GameRenderer {
     }
 
     private void updateCamera() {
-        viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+        Vector2 position = game.getShip().getBody().getPosition();
+        float x = position.x * PIXELS_PER_METER;
+        float y = position.y * PIXELS_PER_METER;
 
+        viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+        camera.position.set(x, y, camera.position.z);
         batch.setProjectionMatrix(camera.combined);
     }
 

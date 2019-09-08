@@ -37,4 +37,8 @@ public abstract class Entity {
         batch.draw(texture, x, y, width / 2f, height / 2f, width, height, 1, 1,
                 rotation, 0, 0, width, height, false, false);
     }
+
+    public Body getBody() {
+        return body;
+    }
 }
