@@ -15,6 +15,7 @@ public abstract class Entity {
         game.registerEntity(this);
 
         this.body = initPhysicsBody(game.getWorld());
+        this.body.setUserData(this);
     }
 
     public void render(SpriteBatch batch){}

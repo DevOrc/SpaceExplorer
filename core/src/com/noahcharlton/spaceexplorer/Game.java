@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Array;
 import com.noahcharlton.spaceexplorer.entity.Asteroid;
 import com.noahcharlton.spaceexplorer.entity.Entity;
 import com.noahcharlton.spaceexplorer.entity.Ship;
+import com.noahcharlton.spaceexplorer.entity.SpaceStation;
 
 public class Game {
 
@@ -13,15 +14,18 @@ public class Game {
     private final Array<Entity> entities = new Array<>();
 
     private final Ship ship;
+    private final SpaceStation spaceStation;
 
     public Game() {
         world =  new World(new Vector2(0f, 0f), true);
+        world.setContactListener(new WorldCollider());
 
         for(int i = 0; i < 15; i++){
             new Asteroid(this);
         }
 
         ship = new Ship(this);
+        spaceStation = new SpaceStation(this);
     }
 
     public void registerEntity(Entity entity){
