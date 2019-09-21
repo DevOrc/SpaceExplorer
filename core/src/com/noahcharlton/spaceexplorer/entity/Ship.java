@@ -20,7 +20,7 @@ public class Ship extends Entity {
     }
 
     @Override
-    public Body initPhysicsBody(World world) {
+    public void initPhysicsBody(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(0, 0);
@@ -38,8 +38,6 @@ public class Ship extends Entity {
         body.createFixture(fixtureDef);
 
         shape.dispose();
-
-        return body;
     }
 
     @Override

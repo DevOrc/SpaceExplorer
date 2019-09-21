@@ -1,12 +1,11 @@
 package com.noahcharlton.spaceexplorer;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.noahcharlton.spaceexplorer.entity.Asteroid;
-import com.noahcharlton.spaceexplorer.entity.Entity;
-import com.noahcharlton.spaceexplorer.entity.Ship;
-import com.noahcharlton.spaceexplorer.entity.SpaceStation;
+import com.noahcharlton.spaceexplorer.entity.*;
 
 public class Game {
 
@@ -33,6 +32,9 @@ public class Game {
     }
 
     public void update(){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
+            new Torpedo(this);
+
         world.step(1/60f, 6, 2);
         entities.forEach(Entity::update);
     }

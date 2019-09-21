@@ -3,7 +3,6 @@ package com.noahcharlton.spaceexplorer.entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -21,7 +20,7 @@ public class SpaceStation extends Entity{
     }
 
     @Override
-    public Body initPhysicsBody(World world) {
+    public void initPhysicsBody(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         bodyDef.position.set(0, 10);
@@ -35,8 +34,6 @@ public class SpaceStation extends Entity{
         body.createFixture(shape, 8f);
 
         shape.dispose();
-
-        return body;
     }
 
     @Override

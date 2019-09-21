@@ -3,7 +3,6 @@ package com.noahcharlton.spaceexplorer.entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -23,7 +22,7 @@ public class Asteroid extends Entity {
     }
 
     @Override
-    public Body initPhysicsBody(World world) {
+    public void initPhysicsBody(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(0, 0);
@@ -40,8 +39,6 @@ public class Asteroid extends Entity {
 
         randomizePosition();
         randomVelocities();
-
-        return body;
     }
 
     private void randomVelocities() {

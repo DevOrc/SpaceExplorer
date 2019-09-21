@@ -37,7 +37,7 @@ public class GameRenderer {
         batch.begin();
         game.getEntities().forEach(entity -> entity.render(batch));
         batch.end();
-        renderPhysicsBoxes();
+//        renderPhysicsBoxes();
     }
 
     private void renderPhysicsBoxes() {

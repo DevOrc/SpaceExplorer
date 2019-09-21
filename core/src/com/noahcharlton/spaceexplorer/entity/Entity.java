@@ -14,7 +14,7 @@ public abstract class Entity {
     public Entity(Game game) {
         game.registerEntity(this);
 
-        this.body = initPhysicsBody(game.getWorld());
+        initPhysicsBody(game.getWorld());
         this.body.setUserData(this);
     }
 
@@ -22,7 +22,7 @@ public abstract class Entity {
 
     public void update(){}
 
-    protected abstract Body initPhysicsBody(World world);
+    protected abstract void initPhysicsBody(World world);
 
     public void renderTexture(SpriteBatch batch, Texture texture, float w, float h) {
         int x = (int) (body.getPosition().x * GameRenderer.PIXELS_PER_METER);
